@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-
+// Kelas HomePage adalah StatefulWidget yang menampilkan antarmuka pengguna untuk kalkulator sederhana dengan dua bilangan input.
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
@@ -8,11 +8,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // TextEditingController untuk mengontrol input dari TextField untuk kedua bilangan.
   final TextEditingController firstNumber = TextEditingController();
   final TextEditingController secondNumber = TextEditingController();
 
+  // Variabel result untuk menyimpan hasil operasi matematika.
   double result = 0;
 
+  // Fungsi untuk menavigasi ke halaman hasil.
   void _navigateToResultPage() async {
     await Navigator.push(
       context,
@@ -24,86 +27,91 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Scaffold sebagai kerangka UI.
     return Scaffold(
       appBar: AppBar(
         title: const Text('Kalkulator 2 Input'),
       ),
-     body: Column(
-      children: [
-        TextField(
-          controller: firstNumber,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Enter first number',
+      body: Column(
+        children: [
+          // TextField untuk input pertama.
+          TextField(
+            controller: firstNumber,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Enter first number',
+            ),
           ),
-        ),
-        TextField(
-          controller: secondNumber,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Enter second number',
+          // TextField untuk input kedua.
+          TextField(
+            controller: secondNumber,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Enter second number',
+            ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                double num1 = double.parse(firstNumber.text);
-                double num2 = double.parse(secondNumber.text);
-                setState(() {
-                  result = num1 + num2;
-                });
-                _navigateToResultPage();
-              },
-              child: const Text('+'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                double num1 = double.parse(firstNumber.text);
-                double num2 = double.parse(secondNumber.text);
-                setState(() {
-                  result = num1 - num2;
-                });
-                _navigateToResultPage();
-              },
-              child: const Text('-'),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                double num1 = double.parse(firstNumber.text);
-                double num2 = double.parse(secondNumber.text);
-                setState(() {
-                  result = num1 * num2;
-                });
-                _navigateToResultPage();
-              },
-              child: const Text('x'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                double num1 = double.parse(firstNumber.text);
-                double num2 = double.parse(secondNumber.text);
-                setState(() {
-                  result = num1 / num2;
-                });
-                _navigateToResultPage();
-              },
-              child: const Text('/'),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
- }
+          // Tombol-tombol operasi matematika.
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  double num1 = double.parse(firstNumber.text);
+                  double num2 = double.parse(secondNumber.text);
+                  setState(() {
+                    result = num1 + num2;
+                  });
+                  _navigateToResultPage();
+                },
+                child: const Text('+'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  double num1 = double.parse(firstNumber.text);
+                  double num2 = double.parse(secondNumber.text);
+                  setState(() {
+                    result = num1 - num2;
+                  });
+                  _navigateToResultPage();
+                },
+                child: const Text('-'),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  double num1 = double.parse(firstNumber.text);
+                  double num2 = double.parse(secondNumber.text);
+                  setState(() {
+                    result = num1 * num2;
+                  });
+                  _navigateToResultPage();
+                },
+                child: const Text('x'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  double num1 = double.parse(firstNumber.text);
+                  double num2 = double.parse(secondNumber.text);
+                  setState(() {
+                    result = num1 / num2;
+                  });
+                  _navigateToResultPage();
+                },
+                child: const Text('/'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
+// Kelas ResultPage adalah StatelessWidget yang menampilkan hasil dari operasi matematika.
 class ResultPage extends StatelessWidget {
   final double result;
 
@@ -111,6 +119,7 @@ class ResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Scaffold sebagai kerangka UI.
     return Scaffold(
       appBar: AppBar(
         title: const Text('Result'),
@@ -119,12 +128,15 @@ class ResultPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Teks menampilkan hasil.
             Text('Hasil : $result'),
             const SizedBox(height: 20),
+            // Teks instruksi untuk kembali ke halaman sebelumnya.
             Text(
               'Tekan panah untuk kembali',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
+            // Tombol ikon untuk kembali.
             IconButton(
               onPressed: () {
                 Navigator.pop(context);
